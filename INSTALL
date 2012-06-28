@@ -1,0 +1,100 @@
+===============================================================================
+General Installation Guide
+===============================================================================
+
+* Pre-requisites
+  - GNU C++ Compiler (g++)
+  - Xerces-C++ library (3.1 or later)
+  - Boost C++ libraries (http://www.boost.org)
+  - ROOT Data Analysis Framework (http://root.cern.ch)  [OPTIONAL]
+
+* Installation
+  - Enter the source main directory
+  - Edit Makefile.conf if necessary (see Build Configuration)
+  - make
+  - make install (might require super-user privileges, depends on Makefile.conf)
+  - execute ldconfig and/or export LD_LIBRARY_PATH (depends on Makefile.conf) 
+  - The 'duck-lab' and 'duck-lab-config' program should be accessible
+    (for that you might need to set PATH, depends on Makefile.conf)
+  
+* How To Test
+  - Enter the source main directory
+  - make test
+  - Execute 'duck-lab' with one of the examples (XML) available 
+    in the 'examples' directory
+
+
+===============================================================================
+Build Configuration
+===============================================================================
+
+* Editing the Makefile.conf to set build parameters
+  - General parameters
+    - DUCK_INSTALL_PREFIX   : destination for duck-lab installation
+    - DUCK_BUILD_TYPE       : select the type of build (release/debug, verbose)
+    - DUCK_DAFAULT_LOG_FILE : the file/stream used for information logging 
+    - DUCK_USE_NAMESPACE    : whether or not the duck:: namespace has to be used
+  - Enable OPTIONAL modules
+    - DUCK_USE_ROOT_CERN    : uses the ROOT (CERN) Data Analysis Framework 
+
+
+===============================================================================
+Specific distribution information
+===============================================================================
+
+* Debian 6.0 (squeeze)
+  - make
+  - g++
+  - libxerces-c3.1 
+  - libxerces-c-dev
+  - ROOT:
+    - Option 1 [clean-way]: Install ROOT from the cern source-file distribution
+      - See root.cern instructions
+    - Option 2 [dirty-way]: Install ROOT un-official cern repository:
+      - Repo info: http://lcg-heppkg.web.cern.ch/lcg-heppkg/debian/index.php
+      - Add these lines to your apt-repos (usuyally /etc/apt/sources.list)
+         deb http://lcg-heppkg.web.cern.ch/lcg-heppkg/debian unstable hep
+         deb-src http://lcg-heppkg.web.cern.ch/lcg-heppkg/debian unstable hep
+      - Add these lines to your apt-repos (usuyally /etc/apt/sources.list)
+        This is because this ROOT distribution requires libstdc++6 and python2.7
+        deb http://ftp.it.debian.org/debian/ unstable main
+        deb-src http://ftp.it.debian.org/debian/ unstable main
+      - Perform apt update (this should give a GPG error)
+         apt-get update
+      - You might want to verify the package GPG signing key according to the 
+        info at: http://lcg-heppkg.web.cern.ch/lcg-heppkg/debian/verify.html
+      - Install the GPG  (type "Yes" to install the key)
+         aptitude install cern-archive-keyring
+      - Perform apt update (this should NOT give the GPG error anymore)
+         apt-get update
+      - Install package (shall install a lot of stuff):
+        apt-get install root-system
+      - But then it may be possible that something needs to be fixed up
+        For istance we did this:
+        apt-get remove libroot-graf2d-graf5.30 libroot-hist5.30 libroot-io5.30
+                       libroot-math-mathcore5.30 libroot-math-matrix5.30
+                       libroot-math-minuit5.30 libroot-net5.30
+
+* Fedora 16  
+  Packages to be installed through the packet manager:
+  - gcc
+  - g++
+  - xerxes-c
+  - xerxes-c-devel
+  - root-graf
+  - root-graf-gpad
+  - root-hist
+  - root-graf3d
+  - root-tree
+  - root-matrix
+  - root-physics
+  - root-mathcore
+  - root-io
+  - root-io-rfio
+  - root-io-xml
+  - root-net
+  - root-core
+  - root-cint
+
+* Ubuntu XXX
+  TODO  

@@ -1,0 +1,28 @@
+MAKE SUBDIR core data 
+/home/syc/4th/oosd2/duck-lab_v1.0_develop/duck_core_lib
+MAKE SUBDIR base_types 
+/home/syc/4th/oosd2/duck-lab_v1.0_develop/duck_core_lib/data
+/home/syc/4th/oosd2/duck-lab_v1.0_develop/duck_core_lib
+/home/syc/4th/oosd2/duck-lab_v1.0_develop
+MAKE SUBDIR core formatter streamer  
+/home/syc/4th/oosd2/duck-lab_v1.0_develop/duck_io_lib
+/home/syc/4th/oosd2/duck-lab_v1.0_develop/duck_io_lib
+MAKE SUBDIR streams policies escapes 
+MAKE SUBDIR file serial 
+/home/syc/4th/oosd2/duck-lab_v1.0_develop/duck_io_lib/streamer/streams
+/home/syc/4th/oosd2/duck-lab_v1.0_develop/duck_io_lib/streamer/streams
+/home/syc/4th/oosd2/duck-lab_v1.0_develop/duck_io_lib/streamer
+/home/syc/4th/oosd2/duck-lab_v1.0_develop/duck_io_lib/streamer
+/home/syc/4th/oosd2/duck-lab_v1.0_develop/duck_io_lib/streamer
+/home/syc/4th/oosd2/duck-lab_v1.0_develop/duck_io_lib
+/home/syc/4th/oosd2/duck-lab_v1.0_develop
+MAKE SUBDIR core storage 
+/home/syc/4th/oosd2/duck-lab_v1.0_develop/duck_storage_lib
+MAKE SUBDIR  TextFile 
+/home/syc/4th/oosd2/duck-lab_v1.0_develop/duck_storage_lib/storage
+/home/syc/4th/oosd2/duck-lab_v1.0_develop/duck_storage_lib
+/home/syc/4th/oosd2/duck-lab_v1.0_develop
+/home/syc/4th/oosd2/duck-lab_v1.0_develop
+---------------------------------------------
+All building is done
+---------------------------------------------

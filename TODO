@@ -1,0 +1,52 @@
+TODO list
+
+- Complete TextFile Storage functionalities:
+  read separators and stuff like that from XML
+
+- Fix SerialStream test: there is an issue with the order of execution of 
+  father and child process (after fork)
+
+- Have a check in the installation rule: if the INSTALL_PREFIX dir is source dir
+  (i.e. DUCK_INSTALL_PREFIX == DUCK_DIR), do not perform actual installation.
+  Even more important, do not perform UNINSTALL!!!
+
+- Change the ROOT-cern automatic generated file: use 'duck-lab-config' instead 
+  of explicit FLAGS
+
+- Introduce the Handshake module from previous implementation
+
+- Selective inlude-file installation:
+  probably it is not required to install all the include files, we might just 
+  give the one we want to export!
+
+- Throw exceptions for "un-implemented" code? (e.g. DAQ-1)
+
+- Have Safety to exception implementations!
+
+- Make an example of new data: IMAGE?
+  - Create the new Data
+  - Create a possible Renderer for such data (requires major work: duck_render)
+
+- Use the pimpl pattern for Parser class to hide XML implementation
+
+- Have a contrib directory in the library trees?
+
+- Make more example of usage of the app: serial, filestream, (socket?)
+
+- Have a more generic structure for the TextFile Storage:
+  - Possibility to register new print functions for new possible Data classes
+
+- Make example of usage of the library! (tutorial)
+
+- GUI front-end (in python) that generates the XML and runs duck-lab 
+
+- PyDuckLab (have wrapping library for python!)
+
+- What if storage might be created irrespective of the XML?
+  For instance, when we want to write a custom program that: 
+  uses DuckIO for acquisition, performs some processing creating new 
+  on-the-fly data and store these data in the storages.
+  In such example, the current XML mechanism is not good to create storages,
+  since they operate on a sub-set of the acquired dataset.
+  With the current structure we can only change the value of the acquired data,
+  but not length, type and name (which would result in creating new data)

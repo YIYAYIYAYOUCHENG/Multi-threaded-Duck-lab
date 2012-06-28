@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<input_definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    	<definition title="DUCK: Storage Integration Test"/>
+
+    	<stream_definition>
+		<stream stream_type="serial">
+    			<serial_stream port_name="/dev/ttyUSB0" baud_rate="115200" data_bits="8" parity_bit="none" stop_bits="1"/>
+		</stream>
+		<acquisition_option acquisition_type="length"/>
+    	</stream_definition>
+
+	<message_description>    
+		<data data_name="ascii message" data_len="10" data_type="int8" endianess="little-endian"/>
+		<data data_name="non-ascii data" data_len="3" data_type="int8" endianess="little-endian"/>
+		<data data_name="byte data" data_len="1" data_type="uint8" endianess="little-endian"/>
+		<data data_name="byte array data" data_len="4" data_type="uint8" endianess="little-endian"/>
+	</message_description>    
+
+    <storage_description>
+
+        <text_file>
+            <text_preset file_name="TextFile_IntegrationTest_FILE_1.txt"/>
+            <data2storage data_name="ascii message">
+                <text_data_preset separator="" print_ascii="true"/>
+            </data2storage>
+            <data2storage data_name="non-ascii data">
+            </data2storage>
+        </text_file>
+
+        <text_file>
+            <text_preset file_name="TextFile_IntegrationTest_FILE_2.txt"/>
+            <data2storage data_name="byte data">
+                <text_data_preset separator="_" int_base="hex"/>
+            </data2storage>
+            <data2storage data_name="byte array data">
+                <text_data_preset separator="," int_base="hex"/>
+            </data2storage>
+        </text_file>
+
+        <text_file>
+            <text_preset file_name="TextFile_IntegrationTest_FILE_3.txt"/>
+            <data2storage data_name="ascii message"/>
+            <data2storage data_name="non-ascii data"/>
+            <data2storage data_name="byte data"/>
+            <data2storage data_name="byte array data"/>
+        </text_file>
+
+    </storage_description>
+</input_definition>

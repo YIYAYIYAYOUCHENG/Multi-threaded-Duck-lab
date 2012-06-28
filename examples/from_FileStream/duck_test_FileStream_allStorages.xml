@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<input_definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    	<definition title="DUCK: Application test: FIleStream and different Storages"/>
+
+    	<stream_definition>
+		<stream stream_type="file_stream">
+		        <!-- If executed from same dir -->
+			<file_stream input_file="./FileStream_TestInputFile.binary"/>
+		</stream>
+        	<acquisition_option acquisition_type="length"/>
+    	</stream_definition>
+
+	<message_description>    
+        	<data data_name="name for uint16" data_len="2" data_type="uint16" endianess="big-endian"/>
+        	<data data_name="floating point" data_len="1" data_type="float32" endianess="little-endian"/>
+        	<data data_name="just 4 bytes" data_len="4" data_type="int8" endianess="little-endian"/>
+	</message_description>    
+
+    <storage_description>
+        <text_file>
+            <text_preset file_name="duck_test_TextFile_FILE_1.txt"/>
+            <data2storage data_name="just 4 bytes">
+                <text_data_preset separator="_" print_ascii="true"/>
+            </data2storage>
+            <data2storage data_name="floating point">
+            </data2storage>
+        </text_file>
+
+        <text_file>
+            <text_preset file_name="duck_test_TextFile_FILE_2.txt"/>
+            <data2storage data_name="just 4 bytes">
+                <text_data_preset separator="_" int_base="hex"/>
+            </data2storage>
+            <data2storage data_name="name for uint16">
+                <text_data_preset separator="," int_base="hex"/>
+            </data2storage>
+            <data2storage data_name="floating point">
+            </data2storage>
+        </text_file>
+        
+        <text_file>
+            <text_preset file_name="duck_test_TextFile_FILE_3.txt"/>
+            <data2storage data_name="just 4 bytes">
+                <text_data_preset separator="|***|" int_base="dec"/>
+            </data2storage>
+            <data2storage data_name="name for uint16">
+                <text_data_preset separator="," int_base="dec"/>
+            </data2storage>
+            <data2storage data_name="floating point">
+            </data2storage>
+        </text_file>
+
+	<!-- 
+	<root_storage>
+            <root_preset file_name="duck_test_RootStorage_outfile.root"
+                         gen_postproc_file="duck_test_RootStorage_POST-PROCESSING.cpp"/>
+            <data2storage data_name="just 4 bytes"/>
+            <data2storage data_name="name for uint16"/>
+            <data2storage data_name="floating point"/>
+        </root_storage>
+	-->
+
+    </storage_description>
+</input_definition>

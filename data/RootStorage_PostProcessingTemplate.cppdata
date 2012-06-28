@@ -1,0 +1,81 @@
+
+#include <cstdlib>
+#include <iostream>
+
+#include "TTree.h" 
+#include "TFile.h" 
+#include "RootStorage/RootStorageEvent.h"
+
+using namespace std;
+#ifdef DUCK_USE_NAMESPACE
+using namespace duck;
+#endif
+
+#define DUCK_POSTPROC_LOG(expr) \
+	cerr << "[DUCK-LAB ROOT POST-PROCESSING LOG] : "\
+	     << expr << endl
+
+
+static void system_fails(string err);
+static bool post_processing(int event_id, vector<Data*> data); 
+
+int main(int argc, char* argv[])
+{
+	RootStorageEvent *event = NULL;
+
+	DUCK_POSTPROC_LOG("Starting root post-processing application" << endl);
+	TFile *f = new TFile (DUCK_POSTPROC_ROOT_FILE);
+	if (!f) {
+		string e = "Error while opening root file '";
+		e += DUCK_POSTPROC_ROOT_FILE;
+		e += "'.";
+		system_fails(e);
+	}
+	DUCK_POSTPROC_LOG("root file '" DUCK_POSTPROC_ROOT_FILE 
+			  "' opened.");
+	TTree *t = (TTree*) f->Get(DUCK_POSTPROC_ROOT_TREE);
+	if (!t) {
+		string e = "Unable to get TTree '";
+		e += DUCK_POSTPROC_ROOT_TREE;
+		e += "' from root file.";
+		system_fails(e);
+	}
+	DUCK_POSTPROC_LOG("root TTree '" DUCK_POSTPROC_ROOT_TREE 
+			  "' fetched from file.");
+	TBranch *b = t->GetBranch(DUCK_POSTPROC_ROOT_EVENT);
+	if (!b) {
+		string e = "Unable to get TBranch '";
+		e += DUCK_POSTPROC_ROOT_EVENT;
+		e += "' from root TTree.";
+		system_fails(e);
+	}
+	DUCK_POSTPROC_LOG("root event TBranch '" DUCK_POSTPROC_ROOT_EVENT 
+			  "' fetched from TTree.");
+	b->SetAddress(&event);
+        int n_event = t->GetEntries();
+
+	DUCK_POSTPROC_LOG("Running post-processing loop");
+	for (int i = 0; i < n_event; i++) {
+		t->GetEntry(i);
+		if (event == NULL) {
+			DUCK_POSTPROC_LOG("event is NULL");
+			continue;
+		}
+		vector<Data*> data;
+		event->get_data(data);
+		DUCK_POSTPROC_LOG("Post-process data [" << dec << i <<"]");
+		if (!post_processing(i, data))
+			system_fails("Error during post processing function.");
+	}
+	DUCK_POSTPROC_LOG("End of root post-processing application" << endl);
+	return 0;
+}
+
+static void system_fails(string err)
+{
+	cout << "DUCK-LAB: root post-processing exiting on ERROR: " << 
+	        err << endl << endl;
+	exit(1);
+}
+
+static bool post_processing(int event_id, vector<Data*> d_vect)

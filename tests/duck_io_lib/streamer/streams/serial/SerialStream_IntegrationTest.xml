@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<input_definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    	<definition title="DUCK: FileStream Integration Test"/>
+
+    	<stream_definition>
+		<stream stream_type="serial">
+    			<serial_stream port_name="REPLACEBLE_TEST_SERIALNAME" baud_rate="115200" data_bits="8" parity_bit="none" stop_bits="1"/>
+		</stream>
+        	<acquisition_option acquisition_type="length"/>
+    	</stream_definition>
+
+	<message_description>    
+        	<data data_name="name for uint16" data_len="2" data_type="uint16" endianess="REPLACEBLE_TEST_ENDIANESS"/>
+        	<data data_name="floating point" data_len="1" data_type="float32" endianess="REPLACEBLE_TEST_ENDIANESS"/>
+        	<data data_name="just 4 bytes" data_len="4" data_type="int8" endianess="REPLACEBLE_TEST_ENDIANESS"/>
+	</message_description>    
+
+    <storage_description>
+        <!-- NOT RELEVANT -->
+    </storage_description>
+</input_definition>

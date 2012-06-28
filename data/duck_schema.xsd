@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ This file is part of duck-lab.
+ 
+ Copyright (c) 
+ 2012 - Christian Nastasi, Claudio Salvadori 
+ 
+ duck-lab is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+ 
+ duck-lab is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+ 
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ MA 02110-1301  USA
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	
+	<!--Simple type definition-->
+	
+	<xs:simpleType name="baud_rate_rs232_value">
+		<xs:restriction base="xs:positiveInteger">
+			<xs:enumeration value="9600"/>
+			<xs:enumeration value="19200"/>
+			<xs:enumeration value="38400"/>
+			<xs:enumeration value="57600"/>
+			<xs:enumeration value="115200"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="data_bits_rs232_value">
+		<xs:restriction base="xs:positiveInteger">
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="7"/>
+			<xs:enumeration value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="parity_bit_rs232">
+		<xs:restriction base="xs:string">
+		   	<xs:enumeration value="odd"/>
+			<xs:enumeration value="even"/>
+			<xs:enumeration value="none"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="stop_bits_rs232_value">
+		<xs:restriction base="xs:float">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="1.5"/>
+			<xs:enumeration value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="color_channel">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+		
+	<!-- Definition of attributes -->
+
+	<!-- Title selection -->
+	<xs:attribute name="title" type="xs:string"/>
+	
+	<!--Stream type selection-->
+	<xs:attribute name="stream_type" type="xs:string"/>
+
+	<!--Serial configuration-->
+	<xs:attribute name="port_name" type="xs:string"/>
+	<xs:attribute name="baud_rate" type="baud_rate_rs232_value"/>
+	<xs:attribute name="data_bits" type="data_bits_rs232_value"/>
+	<xs:attribute name="parity_bit" type="parity_bit_rs232"/>
+	<xs:attribute name="stop_bits" type="stop_bits_rs232_value"/>
+	
+	<!--File configuration-->
+	<xs:attribute name="input_file" type="xs:string"/>
+	<xs:attribute name="header_l" type="xs:nonNegativeInteger"/>
+	<xs:attribute name="n_entry_s" type="xs:nonNegativeInteger"/>
+	<xs:attribute name="n_entry_l" type="xs:positiveInteger"/>
+	<xs:attribute name="trailer_s" type="xs:nonNegativeInteger"/>
+	
+	<!--Socket configuration-->
+	<xs:attribute name="port_number" type="xs:nonNegativeInteger"/>
+	<xs:attribute name="ip_address" type="xs:string"/>
+	<xs:attribute name="socket_type" type="xs:string"/>
+	
+	<!--Stream option-->
+  	<xs:attribute name="acquisition_type" type="xs:string"/>
+  	<xs:attribute name="num_char" type="xs:nonNegativeInteger"/>
+	<xs:attribute name="start" type="xs:string"/>
+	<xs:attribute name="end" type="xs:string"/>
+
+	<!--Escape option-->
+	<xs:attribute name="escape_type" type="xs:string"/>
+	<xs:attribute name="esc_char" type="xs:string"/>
+	<!--xs:attribute name="char_coding" type="xs:string"/-->
+	
+	<!--Handshake-->
+	<xs:attribute name="handshake" type="xs:string"/>
+	<xs:attribute name="handshake_packet" type="xs:string"/>
+	<xs:attribute name="handshake_ack" type="xs:string"/>
+	<xs:attribute name="handshake_nack" type="xs:string"/>
+
+	<!--Char coding-->
+	<xs:attribute name="char_coding" type="xs:string"/>
+
+	<!--Payload description-->
+	<xs:attribute name="data_name" type="xs:string"/>
+	<xs:attribute name="data_len" type="xs:nonNegativeInteger"/>
+	<xs:attribute name="data_type" type="xs:string"/>
+	<xs:attribute name="endianess" type="xs:string"/>
+	
+	<!--Storage description-->
+	<xs:attribute name="file_name" type="xs:string"/>
+	
+	<!-- definition of complex elements -->
+
+	<xs:element name="definition">
+   		<xs:complexType>
+			<xs:attribute ref="title" use="required"/>
+		</xs:complexType>
+  	</xs:element>	
+	
+	<xs:element name="serial_stream">
+   		<xs:complexType>
+   			<xs:attribute ref="port_name" use="required"/>
+			<xs:attribute ref="baud_rate" use="required"/>
+			<xs:attribute ref="data_bits" use="required"/>
+			<xs:attribute ref="parity_bit" use="required"/>
+			<xs:attribute ref="stop_bits" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="file_stream">
+   		<xs:complexType>
+   			<xs:attribute ref="input_file" use="required"/>
+			<xs:attribute ref="header_l"/>
+			<xs:attribute ref="n_entry_s"/>
+			<xs:attribute ref="n_entry_l"/>
+			<xs:attribute ref="trailer_s"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="socket_stream">
+   		<xs:complexType>
+			<xs:attribute ref="port_number" use="required"/>
+			<xs:attribute ref="ip_address" use="required"/>
+			<xs:attribute ref="socket_type" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="start_end_option">
+		<xs:complexType>
+			<xs:attribute ref="num_char" use="required"/>
+			<xs:attribute ref="start" use="required"/>
+			<xs:attribute ref="end" use="required"/>
+			<xs:attribute ref="char_coding" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="acquisition_option">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="start_end_option" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attribute ref="acquisition_type" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="xor_option">
+		<xs:complexType>
+			<xs:attribute ref="esc_char" use="required"/>
+			<xs:attribute ref="char_coding" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="escape">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="xor_option" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attribute ref="escape_type" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="handshake_pkt">
+   		<xs:complexType>
+			<xs:attribute ref="handshake_packet" use="required"/>
+			<xs:attribute ref="handshake_ack"/>
+			<xs:attribute ref="handshake_nack"/>
+			<xs:attribute ref="char_coding" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="stream">
+   		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="serial_stream"/>
+				<xs:element ref="file_stream"/>
+				<xs:element ref="socket_stream"/>
+			</xs:choice>
+		       	<xs:attribute ref="stream_type" use="required"/>
+    		</xs:complexType>
+  	</xs:element>
+
+	<xs:element name="init">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="handshake_pkt" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute ref="handshake" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:attribute ref="data_name" use="required"/>
+			<xs:attribute ref="data_len" use="required"/>
+			<xs:attribute ref="data_type" use="required"/>
+			<xs:attribute ref="endianess" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="message_description">
+    		<xs:complexType>
+      			<xs:sequence>
+        			<xs:element ref="data" minOccurs="1" maxOccurs="unbounded"/>
+      			</xs:sequence>
+    		</xs:complexType>
+  	</xs:element>
+
+	<xs:element name="stream_definition">
+    		<xs:complexType>
+      			<xs:sequence>
+				<xs:element ref="stream" minOccurs="1" maxOccurs="1"/>	
+				<xs:element ref="acquisition_option" minOccurs="1" maxOccurs="1"/>
+				<xs:element ref="escape" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="init" minOccurs="0" maxOccurs="1"/>
+      			</xs:sequence>
+    		</xs:complexType>
+  	</xs:element>
+
+  	<!--Storage section-->
+	<xs:element name="root_preset">
+   		<xs:complexType>
+   			<xs:attribute ref="file_name" use="required"/>
+			<xs:attribute name="gen_postproc_file" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="text_preset">
+   		<xs:complexType>
+   			<xs:attribute ref="file_name" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:simpleType name="text_data_base_t">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="hex"/>
+			<xs:enumeration value="dec"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="text_data_preset">
+   		<xs:complexType>
+			<xs:attribute name="separator" type="xs:string"/>
+			<xs:attribute name="print_ascii" type="xs:boolean"/>
+			<xs:attribute name="int_base" type="text_data_base_t"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="data2storage">
+   		<xs:complexType>
+			<xs:choice>
+				<xs:element name="text_data_preset" minOccurs="0" maxOccurs="1"/>
+			</xs:choice>
+   			<xs:attribute ref="data_name" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="text_file">
+    		<xs:complexType>
+      			<xs:sequence>
+				<xs:element ref="text_preset" minOccurs="1" maxOccurs="1"/>	
+				<xs:element ref="data2storage" minOccurs="1" maxOccurs="unbounded"/>
+      			</xs:sequence>
+    		</xs:complexType>
+  	</xs:element>
+
+	<xs:element name="root_storage">
+    		<xs:complexType>
+      			<xs:sequence>
+				<xs:element ref="root_preset" minOccurs="1" maxOccurs="1"/>	
+				<xs:element ref="data2storage" minOccurs="1" maxOccurs="unbounded"/>
+      			</xs:sequence>
+    		</xs:complexType>
+  	</xs:element>
+
+	<xs:element name="storage_description">
+    		<xs:complexType>
+      			<xs:sequence>
+				<xs:element ref="text_file" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="root_storage" minOccurs="0" maxOccurs="1"/>	
+      			</xs:sequence>
+    		</xs:complexType>
+  	</xs:element>
+
+	<!--Total section-->
+  	<xs:element name="input_definition">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="definition" minOccurs="1" maxOccurs="1"/>
+				<xs:element ref="stream_definition" minOccurs="1" maxOccurs="1"/>
+				<xs:element ref="message_description" minOccurs="1" maxOccurs="1"/>
+				<xs:element ref="storage_description" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	
+	
+	
+</xs:schema>
